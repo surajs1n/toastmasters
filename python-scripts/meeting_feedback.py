@@ -4,9 +4,11 @@
 #
 # Direction of use:
 # 1. Download the CSV report from bit.ly/evote2
+#
 # 2. Open terminal/command-prompt and type the following command:
-#    python3 <this script's path> <the csv file's path>
+#    python3 <this script's path> <input csv file's path>
 #    E.g: python3 meeting_feedback.py /Users/suraj.s/Downloads/HSR\ Toastmasters.csv
+#
 # 3. You will get the output right on the terminal/command-prompt.
 
 
@@ -30,7 +32,9 @@ def average(list):
 
 # Function to print ratings and remarks of the dictionary.
 def print_remarks(ratings, positive_remarks_dict, negative_remarks_dict):
-    print(f'*Average Meeting Rating*: {average(ratings):.2f}\n')
+    print(f'*Total number of votes*: {len(ratings)}\n')
+
+    print(f'*Average Meeting Rating*: {average(ratings):.2f}/5\n')
 
     print(f'*What went well?*\n-----------------')
     for remark, counts in positive_remarks_dict.items():
