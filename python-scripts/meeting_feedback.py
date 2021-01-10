@@ -45,9 +45,9 @@ def print_remarks(ratings, positive_remarks_dict, negative_remarks_dict):
         print(f'- {remark} x{counts}')
 
 
-# Columns with ratings          -> 8,  12, 15
-# Columns with positive remarks -> 9,  13, 16
-# Columns with negative remarks -> 10, 14, 17
+# Columns with ratings          -> 6,  9, 12
+# Columns with positive remarks -> 7, 10, 13
+# Columns with negative remarks -> 8, 11, 14
 def read_from_csv_file(input_file_path):
     ratings = []
     positive_remarks = []
@@ -58,9 +58,9 @@ def read_from_csv_file(input_file_path):
         next(csv_reader)
 
         for line in csv_reader:
-            ratings.extend([line[8], line[12], line[15]])
-            positive_remarks.extend([line[9], line[13], line[16]])
-            negative_remarks.extend([line[10],line[14], line[17]])
+            ratings.extend([line[6], line[9], line[12]])
+            positive_remarks.extend([line[7], line[10], line[13]])
+            negative_remarks.extend([line[8], line[11], line[14]])
 
     # Filter-out elements
     ratings          = list(map(int, [rating for rating in ratings if rating]))

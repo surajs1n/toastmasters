@@ -7,7 +7,7 @@
 #
 # 2. Open terminal/command-prompt and type the following command:
 #    python3 <this script's path> <input csv file's path> <number of speakers>
-#    E.g: python3 prepared_speakers_feedback.py /Users/suraj.s/Downloads/HSR\ Toastmasters2.csv
+#    E.g: python3 prepared_speakers_feedback.py /Users/suraj.s/Downloads/HSR\ Toastmasters.csv 4
 #
 # 3. You will get the output right on the terminal/command-prompt.
 
