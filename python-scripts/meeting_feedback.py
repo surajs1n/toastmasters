@@ -38,11 +38,17 @@ def print_remarks(ratings, positive_remarks_dict, negative_remarks_dict):
 
     print(f'*What went well?*\n-----------------')
     for remark, counts in positive_remarks_dict.items():
-        print(f'- {remark} x{counts}')
+        if counts > 1:
+            print(f'- {remark} x{counts}')
+        else:
+            print(f'- {remark}')
 
     print(f'\n\n*What could have been improved?*\n-----------------')
     for remark, counts in negative_remarks_dict.items():
-        print(f'- {remark} x{counts}')
+        if counts > 1:
+            print(f'- {remark} x{counts}')
+        else:
+            print(f'- {remark}')
 
 
 # Columns with ratings          -> 6,  9, 12
@@ -63,9 +69,9 @@ def read_from_csv_file(input_file_path):
             negative_remarks.extend([line[8], line[11], line[14]])
 
     # Filter-out elements
-    ratings          = list(map(int, [rating for rating in ratings if rating]))
-    positive_remarks = [remark for remark in positive_remarks if len(remark)>3]
-    negative_remarks = [remark for remark in negative_remarks if len(remark)>3]
+    ratings = list(map(int, [rating for rating in ratings if rating]))
+    positive_remarks = [" ".join(remark.split()) for remark in positive_remarks if len(remark)>3]
+    negative_remarks = [" ".join(remark.split()) for remark in negative_remarks if len(remark)>3]
 
     positive_remarks_dict = dict((remark, positive_remarks.count(remark)) for remark in set(positive_remarks))
     negative_remarks_dict = dict((remark, negative_remarks.count(remark)) for remark in set(negative_remarks))
@@ -78,6 +84,6 @@ def read_from_csv_file(input_file_path):
     print_remarks(ratings, positive_remarks_dict, negative_remarks_dict)
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     input_file_path = sys.argv[1]
     read_from_csv_file(input_file_path)

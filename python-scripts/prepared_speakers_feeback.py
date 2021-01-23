@@ -94,28 +94,28 @@ def read_from_csv_file(input_file_path, number_of_speakers):
 
 
          # Filter-out elements
-        first_ratings          = list(map(int, [rating for rating in first_ratings if rating]))
+        first_ratings = list(map(int, [rating for rating in first_ratings if rating]))
         first_positive_remarks = [remark for remark in first_positive_remarks if len(remark)>3]
         first_negative_remarks = [remark for remark in first_negative_remarks if len(remark)>3]
         print_remarks("Speaker 1", first_ratings,  first_positive_remarks,  first_negative_remarks)
 
-        second_ratings          = list(map(int, [rating for rating in second_ratings if rating]))
+        second_ratings = list(map(int, [rating for rating in second_ratings if rating]))
         second_positive_remarks = [remark for remark in second_positive_remarks if len(remark)>3]
         second_negative_remarks = [remark for remark in second_negative_remarks if len(remark)>3]
         print_remarks("Speaker 2", second_ratings, second_positive_remarks, second_negative_remarks)
 
-        third_ratings          = list(map(int, [rating for rating in third_ratings if rating]))
+        third_ratings = list(map(int, [rating for rating in third_ratings if rating]))
         third_positive_remarks = [remark for remark in third_positive_remarks if len(remark)>3]
         third_negative_remarks = [remark for remark in third_negative_remarks if len(remark)>3]
         print_remarks("Speaker 3", third_ratings,  third_positive_remarks,  third_negative_remarks)
 
-        fourth_ratings          = list(map(int, [rating for rating in fourth_ratings if rating]))
+        fourth_ratings = list(map(int, [rating for rating in fourth_ratings if rating]))
         fourth_positive_remarks = [remark for remark in fourth_positive_remarks if len(remark)>3]
         fourth_negative_remarks = [remark for remark in fourth_negative_remarks if len(remark)>3]
         print_remarks("Speaker 4", fourth_ratings, fourth_positive_remarks, fourth_negative_remarks)
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     input_file_path = sys.argv[1]
     number_of_speakers = int(sys.argv[2])
     read_from_csv_file(input_file_path, number_of_speakers)
