@@ -39,14 +39,14 @@ def print_remarks(ratings, positive_remarks_dict, negative_remarks_dict):
     print(f'*What went well?*\n-----------------')
     for remark, counts in positive_remarks_dict.items():
         if counts > 1:
-            print(f'- {remark} x{counts}')
+            print(f'- {remark} *x{counts}*')
         else:
             print(f'- {remark}')
 
     print(f'\n\n*What could have been improved?*\n-----------------')
     for remark, counts in negative_remarks_dict.items():
         if counts > 1:
-            print(f'- {remark} x{counts}')
+            print(f'- {remark} *x{counts}*')
         else:
             print(f'- {remark}')
 

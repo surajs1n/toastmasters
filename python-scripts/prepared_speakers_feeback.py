@@ -15,6 +15,7 @@
 import sys
 import csv
 import os
+import itertools
 
 
 # Create directory if doesn't exist
@@ -33,6 +34,8 @@ def average(list):
 # Function to print ratings and remarks of the dictionary.
 def print_remarks(speaker_name, ratings, positive_remarks, negative_remarks):
     print(f'*{speaker_name}*\n-----------------')
+
+    print(f'*Audience votes count*: {len(ratings)}')
 
     print(f'*Average Rating*: {average(ratings):.2f}/5\n')
 
@@ -64,6 +67,11 @@ def read_from_csv_file(input_file_path, number_of_speakers):
     fourth_positive_remarks = []
     fourth_negative_remarks = []
 
+    guest_names = []
+    guest_phonenumber = []
+    guest_connect = []
+
+
     with open(input_file_path) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         next(csv_reader)
@@ -77,20 +85,50 @@ def read_from_csv_file(input_file_path, number_of_speakers):
                 first_positive_remarks.extend([line[3]])
                 first_negative_remarks.extend([line[4]])
 
-            if (number_of_speakers >= 2):
-                second_ratings.extend([line[5]])
-                second_positive_remarks.extend([line[6]])
-                second_negative_remarks.extend([line[7]])
+                if (number_of_speakers >= 2):
+                    second_ratings.extend([line[5]])
+                    second_positive_remarks.extend([line[6]])
+                    second_negative_remarks.extend([line[7]])
 
-            if (number_of_speakers >= 3):
-                third_ratings.extend([line[8]])
-                third_positive_remarks.extend([line[9]])
-                third_negative_remarks.extend([line[10]])
+                    if (number_of_speakers >= 3):
+                        third_ratings.extend([line[8]])
+                        third_positive_remarks.extend([line[9]])
+                        third_negative_remarks.extend([line[10]])
 
-            if (number_of_speakers >= 4):
-                fourth_ratings.extend([line[11]])
-                fourth_positive_remarks.extend([line[12]])
-                fourth_negative_remarks.extend([line[13]])
+                        if (number_of_speakers >= 4):
+                            fourth_ratings.extend([line[11]])
+                            fourth_positive_remarks.extend([line[12]])
+                            fourth_negative_remarks.extend([line[13]])
+
+                            # copy for four people
+                            if (line[14] == 'Guest'):
+                                guest_names.append(line[15])
+                                guest_phonenumber.append(line[16])
+                                guest_connect.append(line[17])
+                        else:
+                            # copy for three people
+                            if (line[11] == 'Guest'):
+                                guest_names.append(line[12])
+                                guest_phonenumber.append(line[13])
+                                guest_connect.append(line[14])
+                    else:
+                        # copy for two people
+                        if (line[8] == 'Guest'):
+                            guest_names.append(line[9])
+                            guest_phonenumber.append(line[10])
+                            guest_connect.append(line[11])
+                else:
+                    # copy for single person
+                    if (line[5] == 'Guest'):
+                        guest_names.append(line[6])
+                        guest_phonenumber.append(line[7])
+                        guest_connect.append(line[8])
+            else:
+                # copy for empty list
+                if (line[2] == 'Guest'):
+                    guest_names.append(line[3])
+                    guest_phonenumber.append(line[4])
+                    guest_connect.append(line[5])
 
 
          # Filter-out elements
@@ -113,6 +151,10 @@ def read_from_csv_file(input_file_path, number_of_speakers):
         fourth_positive_remarks = [remark for remark in fourth_positive_remarks if len(remark)>3]
         fourth_negative_remarks = [remark for remark in fourth_negative_remarks if len(remark)>3]
         print_remarks("Speaker 4", fourth_ratings, fourth_positive_remarks, fourth_negative_remarks)
+
+        print(f'*Guest list:*\n-----------------')
+        for (name, phone_number, connect) in itertools.zip_longest(guest_names, guest_phonenumber, guest_connect, fillvalue="N/A"):
+            print(f'- {name}, {phone_number}, {connect}')
 
 
 if __name__ == "__main__":
