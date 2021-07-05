@@ -3,7 +3,7 @@
 # Required - Python 3, make sure it installed on your system.
 #
 # Direction of use:
-# 1. Download the CSV report from bit.ly/evote2
+# 1. Download the CSV report from bit.ly/hsrtm-v2
 #
 # 2. Open terminal/command-prompt and type the following command:
 #    python3 <this script's path> <input csv file's path>

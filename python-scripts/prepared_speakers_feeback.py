@@ -3,7 +3,7 @@
 # Required - Python 3, make sure it installed on your system.
 #
 # Direction of use:
-# 1. Download the CSV report from bit.ly/evote1
+# 1. Download the CSV report from bit.ly/hsrtm-v1
 #
 # 2. Open terminal/command-prompt and type the following command:
 #    python3 <this script's path> <input csv file's path> <number of speakers>
@@ -31,8 +31,16 @@ def average(list):
     return sum(list) / len(list)
 
 
+def split_string(array_list):
+    returned_list = []
+    for str in array_list:
+        returned_list.extend(str.split(';'))
+
+    return returned_list
+
+
 # Function to print ratings and remarks of the dictionary.
-def print_remarks(speaker_name, ratings, positive_remarks, negative_remarks):
+def print_remarks(speaker_name, ratings, positive_remarks_dict, negative_remarks_dict):
     print(f'*{speaker_name}*\n-----------------')
 
     print(f'*Audience votes count*: {len(ratings)}')
@@ -40,12 +48,18 @@ def print_remarks(speaker_name, ratings, positive_remarks, negative_remarks):
     print(f'*Average Rating*: {average(ratings):.2f}/5\n')
 
     print(f'*What went well?*\n-----------------')
-    for remark in positive_remarks:
-        print(f'- {remark}')
+    for remark, counts in positive_remarks_dict.items():
+        if counts > 1:
+            print(f'- {remark} *x{counts}*')
+        else:
+            print(f'- {remark}')
 
     print(f'\n*What could have been improved?*\n-----------------')
-    for remark in negative_remarks:
-        print(f'- {remark}')
+    for remark, counts in negative_remarks_dict.items():
+        if counts > 1:
+            print(f'- {remark} *x{counts}*')
+        else:
+            print(f'- {remark}')
 
     print(f'\n\n')
 
@@ -134,23 +148,51 @@ def read_from_csv_file(input_file_path, number_of_speakers):
          # Filter-out elements
         first_ratings = list(map(int, [rating for rating in first_ratings if rating]))
         first_positive_remarks = [remark for remark in first_positive_remarks if len(remark)>3]
+        first_positive_remarks = split_string(first_positive_remarks)
         first_negative_remarks = [remark for remark in first_negative_remarks if len(remark)>3]
-        print_remarks("Speaker 1", first_ratings,  first_positive_remarks,  first_negative_remarks)
+        first_negative_remarks = split_string(first_negative_remarks)
+
+        first_positive_remarks_dict = dict(
+            (remark, first_positive_remarks.count(remark)) for remark in set(first_positive_remarks))
+        first_negative_remarks_dict = dict(
+            (remark, first_negative_remarks.count(remark)) for remark in set(first_negative_remarks))
+        print_remarks("Speaker 1", first_ratings,  first_positive_remarks_dict,  first_negative_remarks_dict)
 
         second_ratings = list(map(int, [rating for rating in second_ratings if rating]))
         second_positive_remarks = [remark for remark in second_positive_remarks if len(remark)>3]
+        second_positive_remarks = split_string(second_positive_remarks)
         second_negative_remarks = [remark for remark in second_negative_remarks if len(remark)>3]
-        print_remarks("Speaker 2", second_ratings, second_positive_remarks, second_negative_remarks)
+        second_negative_remarks = split_string(second_negative_remarks)
+
+        second_positive_remarks_dict = dict(
+            (remark, second_positive_remarks.count(remark)) for remark in set(second_positive_remarks))
+        second_negative_remarks_dict = dict(
+            (remark, second_negative_remarks.count(remark)) for remark in set(second_negative_remarks))
+        print_remarks("Speaker 2", second_ratings, second_positive_remarks_dict, second_negative_remarks_dict)
 
         third_ratings = list(map(int, [rating for rating in third_ratings if rating]))
         third_positive_remarks = [remark for remark in third_positive_remarks if len(remark)>3]
+        third_positive_remarks = split_string(third_positive_remarks)
         third_negative_remarks = [remark for remark in third_negative_remarks if len(remark)>3]
-        print_remarks("Speaker 3", third_ratings,  third_positive_remarks,  third_negative_remarks)
+        third_negative_remarks = split_string(third_negative_remarks)
+
+        third_positive_remarks_dict = dict(
+            (remark, third_positive_remarks.count(remark)) for remark in set(third_positive_remarks))
+        third_negative_remarks_dict = dict(
+            (remark, third_negative_remarks.count(remark)) for remark in set(third_negative_remarks))
+        print_remarks("Speaker 3", third_ratings,  third_positive_remarks_dict,  third_negative_remarks_dict)
 
         fourth_ratings = list(map(int, [rating for rating in fourth_ratings if rating]))
         fourth_positive_remarks = [remark for remark in fourth_positive_remarks if len(remark)>3]
+        fourth_positive_remarks = split_string(fourth_positive_remarks)
         fourth_negative_remarks = [remark for remark in fourth_negative_remarks if len(remark)>3]
-        print_remarks("Speaker 4", fourth_ratings, fourth_positive_remarks, fourth_negative_remarks)
+        fourth_negative_remarks = split_string(fourth_negative_remarks)
+
+        fourth_positive_remarks_dict = dict(
+            (remark, fourth_positive_remarks.count(remark)) for remark in set(fourth_positive_remarks))
+        fourth_negative_remarks_dict = dict(
+            (remark, fourth_negative_remarks.count(remark)) for remark in set(fourth_negative_remarks))
+        print_remarks("Speaker 4", fourth_ratings, fourth_positive_remarks_dict, fourth_negative_remarks_dict)
 
         print(f'*Guest list:*\n-----------------')
         for (name, phone_number, connect) in itertools.zip_longest(guest_names, guest_phonenumber, guest_connect, fillvalue="N/A"):
